@@ -7,14 +7,22 @@ import { Suspense, useEffect } from "react";
 import { clientEnv } from "@/env/client.ts";
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
+	const posthogKey = clientEnv.NEXT_PUBLIC_POSTHOG_KEY;
+
 	useEffect(() => {
-		posthog.init(clientEnv.NEXT_PUBLIC_POSTHOG_KEY, {
-			api_host: "/ingest",
-			capture_pageleave: true,
-			capture_pageview: false, // We capture pageviews manually
-			ui_host: "https://us.posthog.com", // Enable pageleave capture
-		});
-	}, []);
+		if (posthogKey) {
+			posthog.init(posthogKey, {
+				api_host: "/ingest",
+				capture_pageleave: true,
+				capture_pageview: false, // We capture pageviews manually
+				ui_host: "https://us.posthog.com", // Enable pageleave capture
+			});
+		}
+	}, [posthogKey]);
+
+	if (!posthogKey) {
+		return <>{children}</>;
+	}
 
 	return (
 		<PHProvider client={posthog}>

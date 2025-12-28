@@ -17,8 +17,7 @@ export const siteConfig = {
 		name: "Enrique Flores",
 		url: "https://www.linkedin.com/in/enriqueflores000/",
 	},
-	description:
-		"Personalized weekly news distillation delivered via WhatsApp",
+	description: "Personalized weekly news distillation delivered via WhatsApp",
 	keywords: ["Next.js", "fullstack", "Bun", "Drizzle ORM", "template"],
 	name: "Distilled",
 	ogImage: "/opengraph-image.webp",

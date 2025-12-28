@@ -116,7 +116,14 @@
       "Bash(if [ -d \"/home/hybridz/Projects/Distilled/specs/000-template-init/checklists\" ])",
       "Bash(then find /home/hybridz/Projects/Distilled/specs/000-template-init/checklists -name \"*.md\" -type f)",
       "Bash(else echo \"No checklists directory\")",
-      "Bash(git rev-parse:*)"
+      "Bash(git rev-parse:*)",
+      "Bash(NEXT_PUBLIC_POSTHOG_KEY='' POSTHOG_PROJECT_ID='' bunx drizzle-kit push:*)",
+      "Bash(yes:*)",
+      "WebFetch(domain:app.kapso.ai)",
+      "Bash(/tmp/producthunt-main.ts)",
+      "Bash(/tmp/hackernews-main.ts)",
+      "Bash(/tmp/github-main.ts)",
+      "Bash(/tmp/types-main.ts)"
     ],
     "deny": [],
     "ask": []

@@ -146,32 +146,6 @@ const DEPLOYMENT_METADATA: Record<
 		vercelName: "KAPSO_PHONE_NUMBER_ID",
 		vercelScope: "all",
 	},
-
-	META_APP_SECRET: {
-		category: "services",
-		description:
-			"Meta App Secret for webhook verification (optional) [Get at: https://developers.facebook.com]",
-		githubName: "META_APP_SECRET",
-		required: false,
-		strategy: "optional",
-		vercelName: "META_APP_SECRET",
-		vercelScope: "all",
-	},
-
-	// ============================================================================
-	// SERVICES (from src/env/server.ts and client.ts)
-	// ============================================================================
-
-	NEXT_PUBLIC_POSTHOG_KEY: {
-		category: "services",
-		description: "PostHog API Key (public) [Get at: https://posthog.com]",
-		githubName: "NEXT_PUBLIC_POSTHOG_KEY",
-		required: true,
-		strategy: "auto-push",
-		vercelName: "NEXT_PUBLIC_POSTHOG_KEY",
-		vercelScope: "all",
-	},
-
 	// ============================================================================
 	// PROJECT (from src/env/client.ts)
 	// ============================================================================
@@ -185,47 +159,6 @@ const DEPLOYMENT_METADATA: Record<
 		required: true,
 		strategy: "auto-generate",
 		vercelName: "NEXT_PUBLIC_PROJECT_NAME",
-		vercelScope: "all",
-	},
-
-	POLAR_ACCESS_TOKEN: {
-		category: "services",
-		description: "Polar Access Token [Get at: https://polar.sh/settings]",
-		githubName: "POLAR_ACCESS_TOKEN",
-		required: true,
-		strategy: "auto-push",
-		vercelName: "POLAR_ACCESS_TOKEN",
-		vercelScope: "all",
-	},
-
-	POLAR_MODE: {
-		category: "services",
-		defaultValue: "sandbox",
-		description: "Polar Mode (production or sandbox)",
-		required: false,
-		strategy: "auto-push",
-		vercelName: "POLAR_MODE",
-		vercelScope: "all",
-	},
-
-	POSTHOG_PROJECT_ID: {
-		category: "services",
-		description: "PostHog Project ID [Get at: https://posthog.com]",
-		githubName: "POSTHOG_PROJECT_ID",
-		required: true,
-		strategy: "auto-push",
-		vercelName: "POSTHOG_PROJECT_ID",
-		vercelScope: "all",
-	},
-
-	UPLOADTHING_TOKEN: {
-		category: "services",
-		description:
-			"UploadThing Token [Get at: https://uploadthing.com/dashboard]",
-		githubName: "UPLOADTHING_TOKEN",
-		required: true,
-		strategy: "auto-push",
-		vercelName: "UPLOADTHING_TOKEN",
 		vercelScope: "all",
 	},
 };

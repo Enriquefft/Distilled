@@ -7,7 +7,7 @@ import { z } from "zod";
 export const clientEnv = createEnv({
 	client: {
 		NEXT_PUBLIC_APP_URL: z.string().optional(),
-		NEXT_PUBLIC_POSTHOG_KEY: z.string(),
+		NEXT_PUBLIC_POSTHOG_KEY: z.string().optional(),
 		NEXT_PUBLIC_PROJECT_NAME: z.string(),
 	},
 	emptyStringAsUndefined: true,

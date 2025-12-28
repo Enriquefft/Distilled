@@ -1,62 +1,128 @@
-import type { nextrequest } from "next/server";
-import { nextresponse } from "next/server";
-import { serverenv } from "@/env/server";
-import { geterrormessage } from "@/lib/handle-error.ts";
-import { derivedatafromproducthunt } from "@/lib/kapso.ts";
+import { and, eq, isNotNull } from "drizzle-orm";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { db } from "@/db";
+import { user } from "@/db/schema";
+import { serverEnv } from "@/env/server";
+import { getErrorMessage } from "@/lib/handle-error.ts";
+import {
+	fetchPostsFromSources,
+	processUserDelivery,
+	storePosts,
+} from "@/lib/notifications/cron-helpers.ts";
 
 /**
- * vercel cron job:product hunt data send
- * runs daily at 3 am utc (after trial management job)
- * schedule: "0 3 * * *"
+ * Vercel cron job: Tech news digest with interactive buttons
+ * Runs every 5 minutes
+ * Schedule: "*/5 * * * *"
  *
- * tasks performed:
- * 1. refresh tokens expiring within 7 days
- * 2. send expiration reminder emails (7 days before)
- * 3. send failure notifications when refresh fails
- * 4. re-validate credentials that previously had errors
+ * Tasks performed:
+ * 1. Fetch posts from Product Hunt, GitHub, Reddit
+ * 2. Store posts in database (prevent duplicates)
+ * 3. Get opted-in users with phone numbers
+ * 4. Apply filtering based on user preferences (after 5+ interactions)
+ * 5. Send posts with like/dislike buttons via WhatsApp
+ * 6. Track delivery status in database
  */
-export async function get(request: nextrequest) {
-    console.log("[cronjob] triggered");
+export async function GET(request: NextRequest) {
+	console.log("[cron] Post delivery job triggered");
 
-    // verify authorization to prevent unauthorized calls
-    const authheader = request.headers.get("authorization");
-    const expectedauth = `bearer ${env.cron_secret}`;
+	// Verify authorization to prevent unauthorized calls
+	const authHeader = request.headers.get("authorization");
+	const expectedAuth = `Bearer ${serverEnv.CRON_SECRET}`;
 
-    if (authheader !== expectedauth) {
-        console.warn("[cron] unauthorized cronjob secret");
-        return nextresponse.json({ error: "unauthorized" }, { status: 401 });
-    }
+	if (authHeader !== expectedAuth) {
+		console.warn("[cron] Unauthorized request");
+		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+	}
 
-    try {
-        // product hunt data
-        const sample_data = {
-            content:
-                "better auth is an open-source, self-hosted user authentication and management solution that simplifies adding secure auth to any application.",
-            media: [
-                "https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=374983&theme=light",
-                "https://api.producthunt.com/widgets/embed-image/v1/top-post-badge.svg?post_id=374983&theme=light",
-            ],
-            post_link: "https://www.producthunt.com/posts/better-auth",
-            post_votes: 420,
-            title: "better auth",
-        };
+	try {
+		// 1. Fetch posts from external sources
+		const posts = await fetchPostsFromSources();
 
-        await derivedatafromproducthunt(sample_data);
+		if (posts.length === 0) {
+			console.warn("[cron] No posts fetched from any source");
+			return NextResponse.json(
+				{
+					message: "No posts available",
+					success: true,
+					timestamp: new Date().toISOString(),
+				},
+				{ status: 200 },
+			);
+		}
 
-        return nextresponse.json(response, { status: 500 });
-    } catch (error) {
-        const errormessage = geterrormessage(error);
-        console.error("[cron] mp token refresh exception:", errormessage);
+		// 2. Store posts in database (prevent duplicates)
+		await storePosts(posts);
 
-        return nextresponse.json(
-            {
-                error: "internal server error",
-                message: errormessage,
-                timestamp: new date().toisostring(),
-            },
-            { status: 500 },
-        );
-    }
+		// 3. Get opted-in users with phone numbers
+		const users = await db
+			.select({
+				id: user.id,
+				phone: user.phone,
+			})
+			.from(user)
+			.where(and(eq(user.whatsappOptIn, true), isNotNull(user.phone)));
+
+		console.log(`[cron] Processing ${users.length} opted-in users`);
+
+		if (users.length === 0) {
+			console.log("[cron] No opted-in users with phone numbers");
+			return NextResponse.json(
+				{
+					message: "No opted-in users",
+					postsCount: posts.length,
+					success: true,
+					timestamp: new Date().toISOString(),
+				},
+				{ status: 200 },
+			);
+		}
+
+		// 4. Process each user individually
+		const results = {
+			errors: [] as string[],
+			failed: 0,
+			success: 0,
+			total: users.length,
+		};
+
+		for (const u of users) {
+			try {
+				await processUserDelivery(u.id, u.phone!, posts);
+				results.success++;
+			} catch (error) {
+				results.failed++;
+				const errorMsg = getErrorMessage(error);
+				results.errors.push(`User ${u.id}: ${errorMsg}`);
+				console.error(`[cron] Failed to process user ${u.id}:`, errorMsg);
+			}
+		}
+
+		console.log("[cron] Job completed:", results);
+
+		return NextResponse.json(
+			{
+				postsCount: posts.length,
+				results,
+				success: true,
+				timestamp: new Date().toISOString(),
+			},
+			{ status: 200 },
+		);
+	} catch (error) {
+		const errorMessage = getErrorMessage(error);
+		console.error("[cron] Job failed:", errorMessage);
+
+		return NextResponse.json(
+			{
+				error: "Internal server error",
+				message: errorMessage,
+				timestamp: new Date().toISOString(),
+			},
+			{ status: 500 },
+		);
+	}
 }
 
 // prevent route from being statically generated

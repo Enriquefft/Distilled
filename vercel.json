@@ -2,5 +2,19 @@
 	"buildCommand": "bun run build",
 	"devCommand": "bun dev",
 	"framework": "nextjs",
-	"installCommand": "bun install"
+	"installCommand": "bun install",
+	"crons": [
+		{
+			"path": "/api/cron/recopilation",
+			"schedule": "*/5 * * * *"
+		},
+		{
+			"path": "/api/cron/poll-interactions",
+			"schedule": "*/5 * * * *"
+		},
+		{
+			"path": "/api/cron/poll-messages",
+			"schedule": "*/5 * * * *"
+		}
+	]
 }

@@ -166,6 +166,8 @@ bun type && bun lint && bun run build
 
 ### Kapso (WhatsApp)
 
+**Sending Messages:**
+
 ```ts
 import { sendTextMessage, sendButtonMessage } from "@/lib/kapso";
 
@@ -176,7 +178,13 @@ await sendButtonMessage("+1234567890", "Choose:", [
 ]);
 ```
 
-Webhook: `https://yourdomain.com/api/whatsapp/webhook`
+**Message Status Tracking:**
+
+Message status is tracked via Kapso's polling API (no webhooks required):
+- When sending messages, store the returned `whatsappMessageId` in the database
+- Use `src/lib/kapso.ts` polling service to check message status periodically
+- Status updates (sent, delivered, read, failed) are fetched from Kapso API
+- Only requires `KAPSO_API_KEY` and `KAPSO_PHONE_NUMBER_ID` (no Meta app secret needed)
 
 ### PostHog (Analytics)
 

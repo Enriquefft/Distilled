@@ -42,15 +42,16 @@ export const serverEnv = createEnv({
 				"BETTER_AUTH_SECRET must be at least 32 chars. Use: bun run auth:secret",
 		}),
 		BETTER_AUTH_URL: z.string().default(url),
+		// Cron job secret
+		CRON_SECRET: z.string().optional(),
+		// GitHub API (optional - for trending repos via official API)
+		GH_TOKEN: z.string().optional(),
 		GOOGLE_CLIENT_ID: z.string(),
 		GOOGLE_CLIENT_SECRET: z.string(),
 		// Kapso WhatsApp API (optional)
 		KAPSO_API_KEY: z.string().optional(),
 		KAPSO_PHONE_NUMBER_ID: z.string().optional(),
-		META_APP_SECRET: z.string().optional(),
-		// PostHog analytics
-		POSTHOG_PROJECT_ID: z.string(),
-		// UploadThing file uploads
-		UPLOADTHING_TOKEN: z.string(),
+		// ProductHunt API (optional - for trending products)
+		PRODUCTHUNT_TOKEN: z.string().optional(),
 	},
 });

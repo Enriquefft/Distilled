@@ -31,6 +31,10 @@ export async function sendTemplateMessage(
 	to: string,
 	templateName: string,
 	languageCode = "en",
+	components?: Array<{
+		type: string;
+		parameters: Array<{ type: string; text?: string }>;
+	}>,
 ) {
 	if (!kapsoClient || !phoneNumberId) {
 		throw new Error(
@@ -40,6 +44,7 @@ export async function sendTemplateMessage(
 	return kapsoClient.messages.sendTemplate({
 		phoneNumberId,
 		template: {
+			components,
 			language: { code: languageCode },
 			name: templateName,
 		},
@@ -101,6 +106,24 @@ export async function sendButtonMessage(
 		header: headerText ? { text: headerText, type: "text" } : undefined,
 		phoneNumberId,
 		to,
+	});
+}
+
+export async function queryMessageStatus(
+	since: string,
+	limit = 50,
+	direction: "inbound" | "outbound" = "outbound",
+) {
+	if (!kapsoClient || !phoneNumberId) {
+		throw new Error(
+			"Kapso is not configured. Set KAPSO_API_KEY and KAPSO_PHONE_NUMBER_ID.",
+		);
+	}
+	return kapsoClient.messages.query({
+		direction,
+		limit,
+		phoneNumberId,
+		since,
 	});
 }
 

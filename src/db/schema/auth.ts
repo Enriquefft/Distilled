@@ -9,7 +9,10 @@ export const user = schema.table("user", {
 	id: text("id").primaryKey(),
 	image: text("image"),
 	name: text("name").notNull(),
+	phone: text("phone").unique(),
+	phoneVerified: boolean("phone_verified").notNull().default(false),
 	updatedAt: timestamp("updated_at").notNull(),
+	whatsappOptIn: boolean("whatsapp_opt_in").notNull().default(true),
 });
 
 export const session = schema.table("session", {
