@@ -68,7 +68,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 			</head>
 			<body
 				className={cn(
-					"min-h-screen bg-background font-sans antialiased",
+					"min-h-screen bg-[var(--paper)] font-sans antialiased overflow-x-hidden leading-tight",
 					fontSans.variable,
 					archivoBlack.variable,
 					spaceMono.variable,
