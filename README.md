@@ -1,17 +1,17 @@
-# Next Fullstack Template
+# Distilled
 
-[![CI](https://github.com/Enriquefft/next-fullstack-template/actions/workflows/ci.yml/badge.svg)](https://github.com/Enriquefft/next-fullstack-template/actions/workflows/ci.yml)
-[![Security](https://github.com/Enriquefft/next-fullstack-template/actions/workflows/security.yml/badge.svg)](https://github.com/Enriquefft/next-fullstack-template/actions/workflows/security.yml)
+[![CI](https://github.com/Enriquefft/Distilled/actions/workflows/ci.yml/badge.svg)](https://github.com/Enriquefft/Distilled/actions/workflows/ci.yml)
+[![Security](https://github.com/Enriquefft/Distilled/actions/workflows/security.yml/badge.svg)](https://github.com/Enriquefft/Distilled/actions/workflows/security.yml)
 
-A preconfigured Next.js 16 starter for solo devs and small teams. Built with TypeScript, Bun, Tailwind CSS v4, and Drizzle ORM. Includes authentication (Better Auth + Polar payments), WhatsApp integration (Kapso), analytics (PostHog), and production-ready CI/CD.
+Personalized weekly news distillation delivered via WhatsApp. Distilled curates news from Product Hunt, GitHub, and Reddit based on your preferences, delivering a customized digest directly to your WhatsApp.
 
 ## Quick Start
 
 **Prerequisites**: [Bun](https://bun.sh), [Neon](https://console.neon.tech) account
 
 ```bash
-git clone https://github.com/Enriquefft/next-fullstack-template.git my-project
-cd my-project
+git clone https://github.com/Enriquefft/Distilled.git distilled
+cd distilled
 bun install
 cp .env.example .env
 bun run auth:secret        # Copy output to BETTER_AUTH_SECRET in .env

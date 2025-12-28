@@ -164,11 +164,6 @@ bun type && bun lint && bun run build
 
 ## Integrations
 
-### Polar (Payments)
-
-- Config: `POLAR_ACCESS_TOKEN`, `POLAR_MODE`
-- Use `POLAR_MODE='sandbox'` during development
-
 ### Kapso (WhatsApp)
 
 ```ts
@@ -211,3 +206,10 @@ Commands defined in `.claude/commands/speckit.*.md`.
 3. Delete checklist when done
 
 See [README.md](README.md) for full setup instructions.
+
+## Active Technologies
+- TypeScript with Next.js 15 (App Router), Bun runtime + Next.js, React 19, Better Auth, Drizzle ORM, Kapso SDK, PostHog (optional), shadcn/ui, TanStack Form (000-template-init)
+- PostgreSQL (Neon) via Drizzle ORM with namespaced schemas (000-template-init)
+
+## Recent Changes
+- 000-template-init: Added TypeScript with Next.js 15 (App Router), Bun runtime + Next.js, React 19, Better Auth, Drizzle ORM, Kapso SDK, PostHog (optional), shadcn/ui, TanStack Form

@@ -107,7 +107,16 @@
       "WebFetch(domain:github.blog)",
       "WebFetch(domain:developer.microsoft.com)",
       "Bash(gh pr list:*)",
-      "Bash(gh pr close:*)"
+      "Bash(gh pr close:*)",
+      "Bash(git fetch:*)",
+      "Bash(.specify/scripts/bash/create-new-feature.sh:*)",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "Bash(.specify/scripts/bash/update-agent-context.sh:*)",
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(if [ -d \"/home/hybridz/Projects/Distilled/specs/000-template-init/checklists\" ])",
+      "Bash(then find /home/hybridz/Projects/Distilled/specs/000-template-init/checklists -name \"*.md\" -type f)",
+      "Bash(else echo \"No checklists directory\")",
+      "Bash(git rev-parse:*)"
     ],
     "deny": [],
     "ask": []

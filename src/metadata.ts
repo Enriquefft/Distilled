@@ -18,9 +18,9 @@ export const siteConfig = {
 		url: "https://www.linkedin.com/in/enriqueflores000/",
 	},
 	description:
-		"A fullstack Next.js starter powered by Bun, Tailwind CSS and Drizzle ORM.",
+		"Personalized weekly news distillation delivered via WhatsApp",
 	keywords: ["Next.js", "fullstack", "Bun", "Drizzle ORM", "template"],
-	name: "Next Fullstack Template",
+	name: "Distilled",
 	ogImage: "/opengraph-image.webp",
 	themeColor: "#000000",
 	url: getBaseUrl(),

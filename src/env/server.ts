@@ -48,8 +48,6 @@ export const serverEnv = createEnv({
 		KAPSO_API_KEY: z.string().optional(),
 		KAPSO_PHONE_NUMBER_ID: z.string().optional(),
 		META_APP_SECRET: z.string().optional(),
-		POLAR_ACCESS_TOKEN: z.string(),
-		POLAR_MODE: z.enum(["sandbox", "production"]).default("sandbox"),
 		// PostHog analytics
 		POSTHOG_PROJECT_ID: z.string(),
 		// UploadThing file uploads
