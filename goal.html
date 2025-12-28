@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DISTILLED — Lo mejor de la red</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --paper: #e8e4d9;
+            --ink: #1a1a1a;
+            --accent: #ff4d00;
+            --grain-opacity: 0.15;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--paper);
+            color: var(--ink);
+            font-family: 'Space Mono', monospace;
+            overflow-x: hidden;
+            line-height: 1.2;
+        }
+
+        /* Grit Overlay */
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: var(--grain-opacity);
+            filter: contrast(150%) brightness(100%);
+        }
+
+        /* Layout */
+        .pulp-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        header {
+            border-bottom: 8px solid var(--ink);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo {
+            font-family: 'Archivo Black', sans-serif;
+            font-size: clamp(4rem, 15vw, 10rem);
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            mix-blend-mode: multiply;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 4px 10px;
+            text-transform: uppercase;
+        }
+
+        /* Content Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .column-title {
+            font-family: 'Archivo Black', sans-serif;
+            border-bottom: 3px solid var(--ink);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .source-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px dashed var(--ink);
+            transition: all 0.2s ease;
+        }
+
+        .source-item:hover {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        /* Subscription Flow */
+        .subscription-box {
+            background: var(--paper);
+            border: 4px solid var(--ink);
+            padding: 40px;
+            box-shadow: 12px 12px 0px var(--ink);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-step {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .btn-google {
+            background: var(--paper);
+            border: 2px solid var(--ink);
+            padding: 15px 25px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .btn-google:hover {
+            background: var(--ink);
+            color: var(--paper);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px var(--accent);
+        }
+
+        .phone-input-group {
+            margin-top: 30px;
+            opacity: 0.3;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .phone-input-group.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        input[type="tel"] {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 4px solid var(--ink);
+            padding: 10px 0;
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            color: var(--ink);
+            outline: none;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 20px;
+            width: 100%;
+            font-family: 'Archivo Black', sans-serif;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            filter: brightness(1.1);
+            transform: scale(1.01);
+        }
+
+        /* Animations */
+        @keyframes flicker {
+            0% { opacity: 0.97; }
+            5% { opacity: 0.95; }
+            10% { opacity: 0.9; }
+            15% { opacity: 0.98; }
+            100% { opacity: 1; }
+        }
+
+        .pulp-container {
+            animation: flicker 0.5s infinite alternate;
+        }
+
+        /* Utility */
+        .marquee {
+            overflow: hidden;
+            white-space: nowrap;
+            background: var(--ink);
+            color: var(--paper);
+            padding: 10px 0;
+            margin: 40px 0;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .marquee div {
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 4px double var(--accent);
+            color: var(--accent);
+            padding: 5px 10px;
+            font-weight: 900;
+            transform: rotate(15deg);
+            mix-blend-mode: multiply;
+            font-size: 0.8rem;
+        }
+
+    </style>
+</head>
+<body>
+
+    <svg class="noise">
+        <filter id="grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#grain)" />
+    </svg>
+
+    <div class="pulp-container">
+        <header>
+            <div class="logo">Distilled</div>
+            <div class="tagline">La red, comprimida para humanos.</div>
+        </header>
+
+        <div class="grid">
+            <div class="col">
+                <h3 class="column-title">01. Los Orígenes</h3>
+                <div class="source-item">
+                    <strong>HackerNews</strong>
+                    <p>Las discusiones que definen la industria, sin el ruido.</p>
+                </div>
+                <div class="source-item">
+                    <strong>Github</strong>
+                    <p>Top 10 repositorios que están construyendo el mañana.</p>
+                </div>
+                <div class="source-item">
+                    <strong>ProductHunt</strong>
+                    <p>Los lanzamientos más votados del día.</p>
+                </div>
+            </div>
+            <div class="col" style="display: flex; flex-direction: column; justify-content: flex-end;">
+                <p style="font-size: 0.9rem; margin-bottom: 20px; text-align: justify;">
+                    No es una newsletter para tu correo. Es un golpe de realidad vía SMS. Lo más relevante, comprimido por algoritmos y curado por impacto. Directo a tu terminal de bolsillo.
+                </p>
+                <div style="border: 2px solid var(--ink); padding: 10px; text-align: center; font-size: 0.8rem;">
+                    EDICIÓN DIARIA: 08:00 AM EST
+                </div>
+            </div>
+        </div>
+
+        <div class="subscription-box" id="sub-box">
+            <div class="stamp">SOLO INVITADOS</div>
+
+            <div class="auth-step" id="step-1">
+                <p style="font-weight: 700;">PASO 1: VERIFICA TU IDENTIDAD</p>
+                <button class="btn-google" onclick="authenticate()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C9.03,19.27 6.59,17.38 6.59,13.28C6.59,9.18 9.03,7.29 12.19,7.29C14.16,7.29 15.6,8.25 15.6,8.25L17.4,6.24C17.4,6.24 15.22,4.5 12.13,4.5C7.2,4.5 3.74,8.25 3.74,13.28C3.74,18.31 7.2,22.06 12.13,22.06C18.42,22.06 21.6,17.5 21.6,12.23C21.6,11.4 21.35,11.1 21.35,11.1V11.1Z" />
+                    </svg>
+                    Continuar con Google
+                </button>
+            </div>
+
+            <div class="phone-input-group" id="step-2">
+                <p style="font-weight: 700;">PASO 2: COORDENADAS MÓVILES</p>
+                <div style="display: flex; align-items: baseline; gap: 10px;">
+                    <span style="font-size: 1.5rem;">+</span>
+                    <input type="tel" id="phone" placeholder="34 000 000 000" maxlength="15">
+                </div>
+                <button class="submit-btn" onclick="finish()">RECIBIR DESTILADO</button>
+            </div>
+        </div>
+
+        <div class="marquee">
+            <div>
+                GITHUB TRENDS / HACKERNEWS TOP / PRODUCTHUNT DAILY / GITHUB TRENDS / HACKERNEWS TOP / PRODUCTHUNT DAILY / GITHUB TRENDS / HACKERNEWS TOP / PRODUCTHUNT DAILY /
+            </div>
+        </div>
+
+        <footer style="margin-top: 100px; font-size: 0.7rem; display: flex; justify-content: space-between; opacity: 0.6;">
+            <div>DISTILLED © 2024</div>
+            <div>SISTEMA DE COMPRESIÓN PULP V.1.0</div>
+            <div>SIN SPAM. SOLO DATOS.</div>
+        </footer>
+    </div>
+
+    <script>
+        function authenticate() {
+            const step1 = document.getElementById('step-1');
+            const step2 = document.getElementById('step-2');
+
+            step1.style.opacity = '0.3';
+            step1.style.pointerEvents = 'none';
+            step2.classList.add('active');
+
+            const btn = document.querySelector('.btn-google');
+            btn.innerHTML = '✓ AUTENTICADO';
+            btn.style.background = 'var(--ink)';
+            btn.style.color = 'var(--paper)';
+        }
+
+        function finish() {
+            const phone = document.getElementById('phone').value;
+            if(phone.length > 5) {
+                document.getElementById('sub-box').innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <h2 style="font-family: 'Archivo Black'; font-size: 3rem; margin-bottom: 20px;">LISTO.</h2>
+                        <p>Mañana a las 08:00 recibirás tu primer dosis de información.</p>
+                    </div>
+                `;
+            } else {
+                alert('Ingresa un número válido');
+            }
+        }
+
+        // Mouse displacement for grain
+        document.addEventListener('mousemove', (e) => {
+            const noise = document.querySelector('.noise rect');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            noise.setAttribute('x', x * 10);
+            noise.setAttribute('y', y * 10);
+        });
+    </script>
+</body>
+</html>
