@@ -29,7 +29,7 @@ Powered by Distilled`;
 }
 
 // Get environment variables directly
-const KAPSO_API_KEY = process.env["env.KAPSO_API_KEY"];
+const KAPSO_API_KEY = process.env["KAPSO_API_KEY"];
 const KAPSO_PHONE_NUMBER_ID = process.env["KAPSO_PHONE_NUMBER_ID"];
 
 if (!KAPSO_API_KEY || !KAPSO_PHONE_NUMBER_ID) {
