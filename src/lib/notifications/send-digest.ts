@@ -26,7 +26,7 @@ export async function derivedatafromproducthunt(newsData: {
 	};
 
 	// 2. Format message
-	const messageBody = formatDigestMessage(newsData);
+	formatDigestMessage(newsData);
 
 	// 3. Send to each recipient
 	for (const recipient of users) {

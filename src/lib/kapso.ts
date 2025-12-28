@@ -31,10 +31,8 @@ export async function sendTemplateMessage(
 	to: string,
 	templateName: string,
 	languageCode = "en",
-	components?: Array<{
-		type: string;
-		parameters: Array<{ type: string; text?: string }>;
-	}>,
+	// biome-ignore lint/suspicious/noExplicitAny: Kapso SDK type compatibility
+	components?: any,
 ) {
 	if (!kapsoClient || !phoneNumberId) {
 		throw new Error(

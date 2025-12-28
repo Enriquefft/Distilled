@@ -12,8 +12,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { routing } from "@/i18n/routing";
 import { generateRootMetadata } from "@/lib/seo/metadata";
 import {
-    generateOrganizationSchema,
-    generateWebSiteSchema,
+	generateOrganizationSchema,
+	generateWebSiteSchema,
 } from "@/lib/seo/schema";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/metadata";
@@ -21,64 +21,64 @@ import { archivoBlack, inter as fontSans, spaceMono } from "@/styles/fonts";
 
 // biome-ignore lint/style/useComponentExportOnlyModules: Next.js requires viewport export in layout
 export const viewport: Viewport = {
-    initialScale: 1,
-    themeColor: siteConfig.themeColor,
-    width: "device-width",
+	initialScale: 1,
+	themeColor: siteConfig.themeColor,
+	width: "device-width",
 };
 
 type Props = {
-    children: React.ReactNode;
-    params: Promise<{ locale: string }>;
+	children: React.ReactNode;
+	params: Promise<{ locale: string }>;
 };
 
 export function generateStaticParams() {
-    return routing.locales.map((locale) => ({ locale }));
+	return routing.locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({ params }: Props) {
-    const { locale } = await params;
-    return generateRootMetadata(locale);
+	const { locale } = await params;
+	return generateRootMetadata(locale);
 }
 
 export default async function LocaleLayout({ children, params }: Props) {
-    const { locale } = await params;
+	const { locale } = await params;
 
-    if (!hasLocale(routing.locales, locale)) {
-        notFound();
-    }
+	if (!hasLocale(routing.locales, locale)) {
+		notFound();
+	}
 
-    setRequestLocale(locale);
+	setRequestLocale(locale);
 
-    // Generate JSON-LD schemas for Organization and WebSite
-    // These schemas appear on all pages
-    const organizationSchema = generateOrganizationSchema();
-    const websiteSchema = generateWebSiteSchema({
-        inLanguage: [...routing.locales],
-    });
+	// Generate JSON-LD schemas for Organization and WebSite
+	// These schemas appear on all pages
+	const organizationSchema = generateOrganizationSchema();
+	const websiteSchema = generateWebSiteSchema({
+		inLanguage: [...routing.locales],
+	});
 
-    return (
-        <html lang={locale} suppressHydrationWarning>
-            <head>
-                <SchemaScript schema={[organizationSchema, websiteSchema]} />
-            </head>
-            <body
-                className={cn(
-                    "min-h-screen bg-[var(--paper)] font-sans antialiased overflow-x-hidden leading-tight",
-                    fontSans.variable,
-                    archivoBlack.variable,
-                    spaceMono.variable,
-                )}
-            >
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
-                    <NextIntlClientProvider>{children}</NextIntlClientProvider>
-                </ThemeProvider>
-            </body>
-        </html>
-    );
+	return (
+		<html lang={locale} suppressHydrationWarning>
+			<head>
+				<SchemaScript schema={[organizationSchema, websiteSchema]} />
+			</head>
+			<body
+				className={cn(
+					"min-h-screen bg-[var(--paper)] font-sans antialiased overflow-x-hidden leading-tight",
+					fontSans.variable,
+					archivoBlack.variable,
+					spaceMono.variable,
+				)}
+			>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					<NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+					<NextIntlClientProvider>{children}</NextIntlClientProvider>
+				</ThemeProvider>
+			</body>
+		</html>
+	);
 }

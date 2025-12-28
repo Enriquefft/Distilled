@@ -28,7 +28,7 @@ export async function pollMessageStatus() {
 
 		if (!kapsoMessage) continue;
 
-		const status = kapsoMessage["status"] || "sent";
+		const status = (kapsoMessage["status"] as string | undefined) || "sent";
 
 		const updateData: {
 			status: string;

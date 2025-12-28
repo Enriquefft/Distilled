@@ -26,9 +26,11 @@ export async function pollInteractions() {
 		for (const message of messages.data) {
 			// Check if message is an interactive button response
 			if (message.type === "interactive" && message.interactive) {
-				const buttonReply = message.interactive.button_reply;
+				const buttonReply = message.interactive["button_reply"] as
+					| { id: string }
+					| undefined;
 
-				if (buttonReply && buttonReply.id) {
+				if (buttonReply?.id && message.from) {
 					console.log(
 						`[Poll] Processing button click: ${buttonReply.id} from ${message.from}`,
 					);

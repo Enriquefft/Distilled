@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 
 export function GrainOverlay() {
 	const rectRef = useRef<SVGRectElement>(null);
+	const filterId = useId();
 
 	useEffect(() => {
 		const handleMouseMove = (e: MouseEvent) => {
@@ -19,8 +20,12 @@ export function GrainOverlay() {
 	}, []);
 
 	return (
-		<svg className="fixed inset-0 w-full h-full pointer-events-none z-[9999] opacity-[var(--grain-opacity)] contrast-[150%]">
-			<filter id="grain">
+		<svg
+			className="fixed inset-0 w-full h-full pointer-events-none z-[9999] opacity-[var(--grain-opacity)] contrast-[150%]"
+			aria-hidden="true"
+		>
+			<title>Decorative grain texture overlay</title>
+			<filter id={filterId}>
 				<feTurbulence
 					type="fractalNoise"
 					baseFrequency="0.65"
@@ -29,7 +34,12 @@ export function GrainOverlay() {
 				/>
 				<feColorMatrix type="saturate" values="0" />
 			</filter>
-			<rect ref={rectRef} width="100%" height="100%" filter="url(#grain)" />
+			<rect
+				ref={rectRef}
+				width="100%"
+				height="100%"
+				filter={`url(#${filterId})`}
+			/>
 		</svg>
 	);
 }

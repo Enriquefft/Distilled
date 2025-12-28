@@ -70,8 +70,8 @@ export default function HomePage() {
 				<div className="overflow-hidden whitespace-nowrap bg-[var(--ink)] text-[var(--paper)] py-2.5 my-10 font-bold uppercase font-[family-name:var(--font-space)] text-sm">
 					<div className="inline-block animate-[marquee_20s_linear_infinite]">
 						GITHUB TRENDS / HACKERNEWS TOP / PRODUCTHUNT DAILY / GITHUB TRENDS /
-						HACKERNEWS TOP / PRODUCTHUNT DAILY / GITHUB TRENDS / HACKERNEWS TOP /
-						PRODUCTHUNT DAILY /
+						HACKERNEWS TOP / PRODUCTHUNT DAILY / GITHUB TRENDS / HACKERNEWS TOP
+						/ PRODUCTHUNT DAILY /
 					</div>
 				</div>
 
