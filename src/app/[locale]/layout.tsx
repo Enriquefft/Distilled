@@ -18,7 +18,11 @@ import {
 } from "@/lib/seo/schema";
 import { cn } from "@/lib/utils";
 import { siteConfig } from "@/metadata";
-import { inter as fontSans } from "@/styles/fonts";
+import {
+	archivoBlack,
+	inter as fontSans,
+	spaceMono,
+} from "@/styles/fonts";
 
 // biome-ignore lint/style/useComponentExportOnlyModules: Next.js requires viewport export in layout
 export const viewport: Viewport = {
@@ -65,7 +69,9 @@ export default async function LocaleLayout({ children, params }: Props) {
 			<body
 				className={cn(
 					"min-h-screen bg-background font-sans antialiased",
-					fontSans.className,
+					fontSans.variable,
+					archivoBlack.variable,
+					spaceMono.variable,
 				)}
 			>
 				<ThemeProvider

@@ -39,6 +39,12 @@
 	--font-sans:
 		var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+	/* Pulp magazine aesthetic */
+	--paper: #e8e4d9;
+	--ink: #1a1a1a;
+	--pulp-accent: #ff4d00;
+	--grain-opacity: 0.15;
 }
 
 .dark {
@@ -78,6 +84,18 @@
 @layer base {
 	button:not([disabled]),
 	[role="button"]:not([disabled]) {
+		cursor: pointer;
+	}
+
+	/* Pulp magazine crosshair cursor */
+	* {
+		cursor: crosshair;
+	}
+
+	button,
+	a,
+	input,
+	[role="button"] {
 		cursor: pointer;
 	}
 }
