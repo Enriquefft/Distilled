@@ -1,0 +1,36 @@
+{
+	"allow_dirty": false,
+	"auto": false,
+	"confidence": "safe",
+	"execute": false,
+	"mode": "fix",
+	"notifications": true,
+	"profiles": {
+		"full": {
+			"auto": true,
+			"confidence": "low",
+			"execute": true,
+			"simple_only": false
+		},
+		"pr": {
+			"confidence": "safe",
+			"execute": false,
+			"since": "origin/main"
+		},
+		"review": {
+			"confidence": "medium",
+			"execute": false,
+			"show_diff": true
+		},
+		"safe": {
+			"auto": false,
+			"confidence": "safe",
+			"execute": true,
+			"simple_only": true
+		}
+	},
+	"show_diff": false,
+	"simple_only": true,
+	"since": "origin/main",
+	"verbosity": 1
+}

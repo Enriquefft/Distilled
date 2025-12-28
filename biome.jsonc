@@ -1,0 +1,122 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.3.10/schema.json",
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedKeys": "on",
+				"useSortedProperties": "on"
+			}
+		}
+	},
+	"css": {
+		"formatter": {
+			"enabled": true
+		},
+		"linter": {
+			"enabled": true
+		},
+		"parser": {
+			"cssModules": true,
+			"tailwindDirectives": true
+		}
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"includes": [
+			"**",
+			"!**/node_modules",
+			"!**/.direnv",
+			"!**/.next",
+			"!**/e2e",
+			"!**/playwright-report",
+			"!**/test_results"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		},
+		"globals": ["React", "JSX"]
+	},
+	"json": {
+		"formatter": {
+			"enabled": true
+		}
+	},
+	"linter": {
+		"domains": {
+			"next": "all",
+			"react": "all",
+			"test": "all"
+		},
+		"enabled": true,
+		"includes": [
+			"**",
+			"!**/old/**/*",
+			"!**/next-env.d.ts",
+			"!**/schema.gen*",
+			"!**/experimental",
+			"!**/src/components/ui/*"
+		],
+		"rules": {
+			"complexity": {
+				// Allow bracket notation for index signature access
+				// (required by TS noPropertyAccessFromIndexSignature)
+				"useLiteralKeys": "off"
+			},
+			"recommended": true,
+			"style": {
+				"noInferrableTypes": "error",
+				"noParameterAssign": "error",
+				"noUnusedTemplateLiteral": "error",
+				"noUselessElse": "error",
+				"useAsConstAssertion": "error",
+				"useDefaultParameterLast": "error",
+				"useEnumInitializers": "error",
+				"useNumberNamespace": "error",
+				"useSelfClosingElements": "error",
+				"useSingleVarDeclarator": "error"
+			}
+		}
+	},
+	"overrides": [
+		{
+			// allow default export in page.tsx | layout.tsx | error.tsx files
+			"includes": [
+				"**/src/app/**/page.tsx",
+				"**/src/app/**/layout.tsx",
+				"**/src/app/**/error.tsx"
+			],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDefaultExport": "off",
+						"useComponentExportOnlyModules": {
+							"level": "error",
+							"options": {
+								"allowExportNames": [
+									"metadata",
+									"generateMetadata",
+									"generateStaticParams"
+								]
+							}
+						}
+					},
+					"suspicious": {
+						"noShadowRestrictedNames": "off"
+					}
+				}
+			}
+		}
+	],
+	"vcs": {
+		"clientKind": "git",
+		"enabled": true,
+		"useIgnoreFile": false
+	}
+}
