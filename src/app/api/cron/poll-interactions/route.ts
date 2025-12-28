@@ -7,7 +7,6 @@ import { pollInteractions } from "@/lib/notifications/poll-interactions.ts";
 /**
  * Vercel cron job: Poll for WhatsApp button interactions
  * Runs every 5 minutes
- * Schedule: "*/5 * * * *"
  *
  * Tasks performed:
  * 1. Fetch inbound messages from Kapso API

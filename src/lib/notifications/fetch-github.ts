@@ -89,22 +89,27 @@ async function fetchGitHubTrendingOfficial(token: string): Promise<PostData[]> {
 			throw new Error(`GitHub GraphQL error: ${data.errors[0]?.message}`);
 		}
 
-		return data.data.search.nodes.slice(0, 5).map(
-			(repo: {
-				owner: { login: string };
-				name: string;
-				description: string | null;
-				url: string;
-				stargazerCount: number;
-			}) => ({
-				content: repo.description || "No description available",
-				id: `gh_${repo.owner.login}_${repo.name}`.replace(/[^a-zA-Z0-9_]/g, "_"),
-				source: "github",
-				title: `${repo.owner.login}/${repo.name}`,
-				url: repo.url,
-				votes: repo.stargazerCount,
-			}),
-		);
+		return data.data.search.nodes
+			.slice(0, 5)
+			.map(
+				(repo: {
+					owner: { login: string };
+					name: string;
+					description: string | null;
+					url: string;
+					stargazerCount: number;
+				}) => ({
+					content: repo.description || "No description available",
+					id: `gh_${repo.owner.login}_${repo.name}`.replace(
+						/[^a-zA-Z0-9_]/g,
+						"_",
+					),
+					source: "github",
+					title: `${repo.owner.login}/${repo.name}`,
+					url: repo.url,
+					votes: repo.stargazerCount,
+				}),
+			);
 	} catch (error) {
 		console.error("[GitHub] Official API failed:", error);
 		throw error;

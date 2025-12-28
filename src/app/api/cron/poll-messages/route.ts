@@ -7,7 +7,6 @@ export const runtime = "nodejs";
 /**
  * Vercel cron job: Poll WhatsApp message delivery status
  * Runs every 5 minutes
- * Schedule: "*/5 * * * *"
  *
  * Tasks performed:
  * 1. Check delivery status of sent WhatsApp messages

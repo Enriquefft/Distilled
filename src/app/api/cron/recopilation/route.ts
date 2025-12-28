@@ -13,11 +13,10 @@ import {
 
 /**
  * Vercel cron job: Tech news digest with interactive buttons
- * Runs every 5 minutes
- * Schedule: "*/5 * * * *"
+ * Runs daily at 3 AM UTC
  *
  * Tasks performed:
- * 1. Fetch posts from Product Hunt, GitHub, Reddit
+ * 1. Fetch posts from Product Hunt, GitHub, Reddit, HackerNews
  * 2. Store posts in database (prevent duplicates)
  * 3. Get opted-in users with phone numbers
  * 4. Apply filtering based on user preferences (after 5+ interactions)
